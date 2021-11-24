@@ -9,9 +9,7 @@ const app: Koa<DefaultState, DefaultContext> = new Koa();
 const router: Router = new Router();
 
 router.get('/', async (ctx: ParameterizedContext<DefaultContext, DefaultState>, next) => {
-    await next();
-    console.log(ctx);
-    
+    //await next();
     ctx.body = {msg : 'Greetings traveler!'}
 });
 router.get('/', async (ctx, next) => {
