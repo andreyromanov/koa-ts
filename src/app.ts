@@ -1,32 +1,27 @@
-import * as Koa from 'koa';
-import {DefaultState, DefaultContext, ParameterizedContext} from 'koa';
-import * as Router from 'koa-router';
+import Koa from 'koa';
+import {DefaultState, DefaultContext} from 'koa';
+import {config} from 'dotenv'
+import routes from './routes'
+import bodyParser from "koa-bodyparser";
+import connectDatabase from "./util"
+//import middleware from './middlewares'
+config()
 
-
-const port = 3000;
 const app: Koa<DefaultState, DefaultContext> = new Koa();
 
-const router: Router = new Router();
+//app.use(middleware())
+app.use(bodyParser());
+app.use(routes())
 
-router.get('/', async (ctx: ParameterizedContext<DefaultContext, DefaultState>, next) => {
-    //await next();
-    ctx.body = {msg : 'Greetings traveler!'}
-});
-router.get('/', async (ctx, next) => {
-    const start = Date.now();
-    console.log('before', ctx.body);
-    await next();
-    console.log('after', ctx.body);
-    const ms = Date.now() - start;
-    ctx.set('X-Response-Time', `${ms}ms`);
-});
-router.get('/', async (ctx) =>{
-    ctx.body = 'Hello Andrii'
-});
-
-
-app.use(router.routes()).use(router.allowedMethods());
-
-app.listen(port, () =>{
-    console.log('App started...');
-})
+function main (): void {
+    try {
+        app.listen(process.env.PORT || 8080, () =>{
+            console.log('App started...');
+            connectDatabase(process.env.MONGO_URL)
+        })
+    } catch (error) {
+      console.error(error)
+    }
+}
+  
+main()
