@@ -2,8 +2,8 @@ import Router from 'koa-router'
 
 export default (router: Router) => {
     router.get('/', async (ctx, next) => {
-        await next();
-        //ctx.body = {msg : 'Greetings traveler, Andrii!'}
+        //await next();
+        ctx.body = {msg : 'Greetings traveler, Andrii!'}
     });
     router.get('/', async (ctx, next) => {
         const start = Date.now();

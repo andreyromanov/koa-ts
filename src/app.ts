@@ -20,11 +20,11 @@ app.use(routes())
 function main (): void {
     try {
         app.listen(process.env.PORT || 8080, () =>{
-            console.log('App started...');
+            console.log('App started... PORT='+ process.env.PORT);
             connectDatabase(process.env.MONGO_URL)
         })
 
-        Sentry.init({
+        /*Sentry.init({
             dsn: "https://a680d02d43344bacbe4162f9e105046d@o1080304.ingest.sentry.io/6085951",
           
             // Set tracesSampleRate to 1.0 to capture 100%
@@ -46,7 +46,7 @@ function main (): void {
             } finally {
               transaction.finish();
             }
-          }, 99);
+          }, 99);*/
 
 
     } catch (error) {
